@@ -1,35 +1,37 @@
 /** @type {import('next').NextConfig} */
-
 const nextConfig = {
   env: {
-    // Change below URL with your current domain
-    API_PROD_URL: "http://localhost:3000/api",
-    storageURL: "http://localhost:3000",
+    API_PROD_URL: process.env.NODE_ENV === 'production' 
+      ? 'https://ecommerce-store-red-five.vercel.app/api'
+      : 'http://localhost:3000/api',
+    storageURL: process.env.NODE_ENV === 'production'
+      ? 'https://ecommerce-store-red-five.vercel.app'
+      : 'http://localhost:3000',
   },
 
   images: {
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "127.0.0.1",
+        protocol: 'https',
+        hostname: 'ecommerce-store-red-five.vercel.app',
       },
       {
-        protocol: "http",
-        hostname: "localhost",
+        protocol: 'http',
+        hostname: 'localhost',
       },
-    ],
-  },
-  module: {
-    rules: [
-      { test: /\.(ts|tsx|jsx)$/, loader: "ts-loader" },
-      { test: /\.css$/, use: ["style-loader", "css-loader"] },
       {
-        test: /\.(gif|svg|jpg|png|mp3)$/,
-        use: ["file-loader"],
-      },
+        protocol: 'http',
+        hostname: '127.0.0.1',
+      }
     ],
   },
-  // other boilerplate config goes down here
+
+  // Remove the module configuration as it's not needed in Next.js
+  // Next.js handles these loaders internally
+  
+  // Optional: Add other Next.js specific configurations
+  reactStrictMode: true,
+  swcMinify: true,
 };
 
 export default nextConfig;
